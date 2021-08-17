@@ -14,7 +14,9 @@
       1 DRIVER, 1 NAVIGATOR.
       1 Exercise each. Use GitHub to share the code.
       Less exercise, more complicated. 
+
       Ex1) Get and display, using async / await, the users from: https://jsonplaceholder.typicode.com/users 
+
       Ex2) Create a dropdown (<select>) that allows the user to select between name, username and email. 
            Create then a filter. When the user types in something, you should filter the user based on the input and on the value of the select.
            Es.: select on NAME. Filter input = Glenna, only user id number 9 should remain
@@ -39,6 +41,102 @@
 </head>
 
 <body>
+  <br>
+  <br>
+  <div class="container">
+  <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Dropdown button
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" href="#">Name</a>
+      <a class="dropdown-item" href="#">User name</a>
+      <a class="dropdown-item" href="#">e-mail</a>
+    </div>
+    <input type="text" placeholder="...search User" onchange="filterFunction(this.value)">
+
+  </div>
+
+  <div class="displayData">
+
+  </div>
+  <br>
+  <br>
+  <br>
+  <div class = "users">
+  </div>
+</div>
+
+
+  <script>
+
+    let ourUser = document.querySelector(".displayData")
+    let userlist = document.querySelector(".users")
+    ourUser.innerHTML = "User"
+
+    window.onload = () => {
+    asyncUser ()
+    }
+
+
+  let recievedData = []
+
+  console.log("This is recievedData", recievedData)
+
+  const asyncUser = async () => {
+
+  try {
+  let response = await fetch('https://jsonplaceholder.typicode.com/users');
+  let data = await response.json()
+
+  recievedData = data
+  console.log(recievedData)
+  
+  displayName(recievedData)
+
+  for(b of data) {
+      userlist.innerHTML += 
+            `
+            <ul>
+            <li>  name: ${b.name} <br> 
+                  username: ${b.username} <br> 
+                  e-mail: ${b.email} </li>
+            </ul>
+          ` 
+  }
+    
+  } catch (err) {
+    console.log(err)
+  }
+
+  }
+
+  const filterFunction = function(input) {
+
+    const filteredData = recievedData.filter(search => 
+    search.name.toLowerCase().includes(input.toLowerCase())
+    )
+
+    console.log("This is filteredData",filteredData)
+
+    displayName(filteredData)
+  }
+
+  function displayName(recievedData) {
+
+    
+    ourUser.innerHTML = `
+      <ul><li> ${recievedData.name}</li></ul>  
+    `
+    console.log(recievedData.name)
+  }
+
+
+
+
+
+  </script>
+
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>
