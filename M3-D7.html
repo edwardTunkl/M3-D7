@@ -51,25 +51,32 @@
     <br />
     <div class="container">
       <div class="row d-flex my-4">
+        <div class="col-3">
        <select class ="filter" name="" id="">
          <option sected value="name">Name</option>
          <option value="username">username</option>
          <option value="email">email</option>
       </select>
-      </div>
-        <input
-          class = "search-input"
-          type="text"
-          placeholder="...search User"
-          onchange="filterFunction(this.value)"
-        />
+    </div>
+    <div class="col">
+      <input
+        class = "search-input"
+        type="text"
+        placeholder="...search User"
+        onchange="filterFunction(this.value)"
+        
+      />
+    </div>
       </div>
 
       <div class="displayData"></div>
       <br />
       <br />
       <br />
-      <div class="users"></div>
+      <div class="users">
+        <h5>User List</h5>
+        <br>
+      </div>
     </div>
 
     <script>
@@ -95,45 +102,45 @@
 
           for (b of data) {
             userlist.innerHTML += `
-            <ul>
-            <li>  Name: ${b.name} <br> 
-                  Username: ${b.username} <br> 
-                  e-mail: ${b.email} </li>
-            </ul>
-          `;
+                        <ul>
+                        <li>  Name: ${b.name} <br> 
+                              Username: ${b.username} <br> 
+                              e-mail: ${b.email} </li>
+                        </ul>
+                      `;
           }
         } catch (err) {
           console.log(err);
         }
       };
-      const selectedOption = document.querySelector(".filter").value
+      const selectedOption = ""
       console.log(selectedOption)
 
       const filterFunction = function (input) {
+
+        const selectedOption = document.querySelector(".filter").value
         const filteredData = recievedData.filter((user) =>
           user[selectedOption].toLowerCase().includes(input.toLowerCase())
         );
 
         console.log("This is filteredData", filteredData);
-
+        console.log("This is selected Option", selectedOption)
         displayName(filteredData);
 
       };
       
       function displayName(rawData) {
-        
+        const selectedOption = document.querySelector(".filter").value
+
         ourUser.innerHTML = ""
-       
-        console.log("this is data", rawData);
-      
          for (a of rawData) {
           ourUser.innerHTML += `
                     <ul><li> ${a[selectedOption]}</li></ul>  
                     `
           console.log(a.name);
         }
-        
       }
+      
     </script>
 
     <script
